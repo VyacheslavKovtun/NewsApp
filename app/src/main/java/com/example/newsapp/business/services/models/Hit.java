@@ -1,11 +1,11 @@
-package com.example.newsapp.business.dto;
+package com.example.newsapp.business.services.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class NewsDTO {
+public class Hit {
 
     @SerializedName("url")
     @Expose

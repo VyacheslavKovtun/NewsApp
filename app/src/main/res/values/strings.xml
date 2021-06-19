@@ -6,6 +6,7 @@
     <string name="nav_header_subtitle">Latest news from Ukraine</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+    <string name="empty_textview">TextView</string>
 
     <string name="menu_news">News</string>
     <string name="menu_saved">Saved</string>

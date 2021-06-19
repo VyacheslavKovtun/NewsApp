@@ -4,19 +4,19 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.newsapp.business.dto.NewsDTO;
+import com.example.newsapp.business.services.models.Hit;
 
 import java.util.List;
 
 public class NewsViewModel extends ViewModel {
-    private MutableLiveData<List<NewsDTO>> mNews;
+    private MutableLiveData<List<Hit>> mNews;
 
-    public NewsViewModel(List<NewsDTO> news) {
+    public NewsViewModel(List<Hit> news) {
         mNews = new MutableLiveData<>();
         mNews.setValue(news);
     }
 
-    public LiveData<List<NewsDTO>> getNews() {
+    public LiveData<List<Hit>> getNews() {
         return mNews;
     }
 }
