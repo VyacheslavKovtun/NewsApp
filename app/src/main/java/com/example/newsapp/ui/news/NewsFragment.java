@@ -60,24 +60,24 @@ public class NewsFragment extends Fragment {
             public void onResponse(Call<DataNewsResponse> call, Response<DataNewsResponse> response) {
                 DataNewsResponse body = response.body();
                 news.addAll(body.getHits());
+
+                adapter = new NewsAdapter(root.getContext(), R.layout.news_layout, news);
+                gvNews.setAdapter(adapter);
+
+                gvNews.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        //gvNews.getSelectedItem(); - open selected item to read a full info
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                    }
+                });
             }
 
             @Override
             public void onFailure(Call<DataNewsResponse> call, Throwable t) {
-            }
-        });
-
-        adapter = new NewsAdapter(root.getContext(), R.layout.news_layout, news);
-        gvNews.setAdapter(adapter);
-
-        gvNews.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //gvNews.getSelectedItem(); - open selected item to read a full info
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
             }
         });
 
