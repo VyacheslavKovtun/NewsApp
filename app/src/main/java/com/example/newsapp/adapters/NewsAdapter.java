@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import androidx.annotation.Nullable;
 
 import com.example.newsapp.R;
 import com.example.newsapp.business.services.models.Hit;
+import com.orm.SugarContext;
 
 import java.util.List;
 
@@ -36,11 +38,20 @@ public class NewsAdapter extends ArrayAdapter<Hit> {
         TextView tvTitle = view.findViewById(R.id.tvTitle);
         TextView tvPubDate = view.findViewById(R.id.tvPubDate);
         TextView tvDescription = view.findViewById(R.id.tvDescription);
+        Button btnSave = view.findViewById(R.id.btnSave);
+
+        SugarContext.init(view.getContext());
 
         Hit curNews = news.get(position);
         tvTitle.setText(curNews.getTitle());
         tvPubDate.setText(curNews.getPubDate());
         tvDescription.setText(curNews.getDescription());
+
+        btnSave.setOnClickListener(btn -> {
+            Hit.save(curNews);
+            news.remove(curNews);
+            notifyDataSetChanged();
+        });
 
         return view;
     }

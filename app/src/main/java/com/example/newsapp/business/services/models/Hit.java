@@ -2,10 +2,12 @@ package com.example.newsapp.business.services.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.orm.SugarRecord;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Hit {
+public class Hit extends SugarRecord implements Serializable  {
 
     @SerializedName("url")
     @Expose
@@ -37,6 +39,9 @@ public class Hit {
     @SerializedName("content")
     @Expose
     private String content;
+    @SerializedName("watches")
+    @Expose
+    private int watches;
 
     public String getUrl() {
         return url;
@@ -116,5 +121,13 @@ public class Hit {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public int getWatches() {
+        return watches;
+    }
+
+    public void setWatches(int watches) {
+        this.watches = watches;
     }
 }

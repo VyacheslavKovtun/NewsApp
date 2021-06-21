@@ -1,21 +1,25 @@
 package com.example.newsapp.ui.news;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.newsapp.R;
+import com.example.newsapp.ViewHitActivity;
 import com.example.newsapp.adapters.NewsAdapter;
 import com.example.newsapp.business.services.NewsService;
 import com.example.newsapp.business.services.models.DataNewsResponse;
 import com.example.newsapp.business.services.models.Hit;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.orm.SugarContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +35,7 @@ public class NewsFragment extends Fragment {
     NewsViewModel newsViewModel;
     List<Hit> news = new ArrayList<>();
     GridView gvNews;
+    Button btnSave;
     NewsAdapter adapter;
 
     public NewsFragment() {
@@ -44,6 +49,7 @@ public class NewsFragment extends Fragment {
         newsViewModel = new NewsViewModel(news);
         View root = inflater.inflate(R.layout.fragment_news, container, false);
         gvNews = root.findViewById(R.id.gvNews);
+        btnSave = root.findViewById(R.id.btnSave);
 
         Gson gson = new GsonBuilder()
                 .setLenient()
@@ -59,19 +65,29 @@ public class NewsFragment extends Fragment {
             @Override
             public void onResponse(Call<DataNewsResponse> call, Response<DataNewsResponse> response) {
                 DataNewsResponse body = response.body();
-                news.addAll(body.getHits());
+                SugarContext.init(root.getContext());
+
+                List<Hit> savedHits = Hit.listAll(Hit.class);
+                List<Hit> hits = body.getHits();
+
+                for (Hit sHit : savedHits) {
+                    Hit hit = hits.stream().filter(h -> h.getUrl().equals(sHit.getUrl())).findFirst().get();
+                    hits.remove(hit);
+                }
+
+                news.addAll(hits);
 
                 adapter = new NewsAdapter(root.getContext(), R.layout.news_layout, news);
                 gvNews.setAdapter(adapter);
 
-                gvNews.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        //gvNews.getSelectedItem(); - open selected item to read a full info
-                    }
+                Intent intent = new Intent(root.getContext(), ViewHitActivity.class);
 
+                gvNews.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Hit selHit = news.get(position);
+                        intent.putExtra(Hit.class.getSimpleName(), selHit);
+                        startActivity(intent);
                     }
                 });
             }
