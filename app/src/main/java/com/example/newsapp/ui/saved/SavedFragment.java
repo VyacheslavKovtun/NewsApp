@@ -14,6 +14,7 @@ import com.example.newsapp.business.services.models.Hit;
 import com.orm.SugarContext;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class SavedFragment extends Fragment {
@@ -39,8 +40,9 @@ public class SavedFragment extends Fragment {
 
         saved.clear();
         saved.addAll(Hit.listAll(Hit.class));
+        Collections.sort(saved, (h1, h2) -> h2.getWatches() - h1.getWatches());
 
-        adapter = new NewsAdapter(root.getContext(), R.layout.news_layout, saved);
+        adapter = new NewsAdapter(root.getContext(), R.layout.news_layout, saved, true);
         gvSaved.setAdapter(adapter);
 
         return root;

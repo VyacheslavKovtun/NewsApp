@@ -23,13 +23,14 @@ public class NewsAdapter extends ArrayAdapter<Hit> {
     private LayoutInflater inflater;
     private List<Hit> news;
     private int resource;
+    private boolean isSaved;
 
-    public NewsAdapter(@NonNull Context context, int resource, List<Hit> news) {
+    public NewsAdapter(@NonNull Context context, int resource, List<Hit> news, boolean isSaved) {
         super(context, resource, news);
-
-        this.news = news;
         this.inflater = LayoutInflater.from(context);
+        this.news = news;
         this.resource = resource;
+        this.isSaved = isSaved;
     }
 
     @NonNull
@@ -51,9 +52,7 @@ public class NewsAdapter extends ArrayAdapter<Hit> {
         tvDescription.setText(curNews.getDescription());
 
         btnSave.setOnClickListener(btn -> {
-
-            List<Hit> saved = Hit.listAll(Hit.class);
-            if(saved.stream().filter(h -> h.getUrl().equals(curNews.getUrl())).findFirst().get() == null) {
+            if(!isSaved) {
                 Hit.save(curNews);
                 news.remove(curNews);
                 notifyDataSetChanged();
@@ -64,10 +63,10 @@ public class NewsAdapter extends ArrayAdapter<Hit> {
             Intent intent = new Intent(view.getContext(), ViewHitActivity.class);
             curNews.setWatches(curNews.getWatches() + 1);
 
-            List<Hit> saved = Hit.listAll(Hit.class);
-            if(saved.contains(curNews)) {
+            if(isSaved) {
                 curNews.save();
             }
+
             intent.putExtra(Hit.class.getSimpleName(), curNews);
             getContext().startActivity(intent);
         });

@@ -74,7 +74,7 @@ public class NewsFragment extends Fragment {
 
                 news.addAll(hits);
 
-                adapter = new NewsAdapter(root.getContext(), R.layout.news_layout, news);
+                adapter = new NewsAdapter(root.getContext(), R.layout.news_layout, news, false);
                 gvNews.setAdapter(adapter);
             }
 
