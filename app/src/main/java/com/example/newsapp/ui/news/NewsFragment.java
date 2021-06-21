@@ -1,18 +1,15 @@
 package com.example.newsapp.ui.news;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.newsapp.R;
-import com.example.newsapp.ViewHitActivity;
 import com.example.newsapp.adapters.NewsAdapter;
 import com.example.newsapp.business.services.NewsService;
 import com.example.newsapp.business.services.models.DataNewsResponse;
@@ -80,7 +77,7 @@ public class NewsFragment extends Fragment {
                 adapter = new NewsAdapter(root.getContext(), R.layout.news_layout, news);
                 gvNews.setAdapter(adapter);
 
-                Intent intent = new Intent(root.getContext(), ViewHitActivity.class);
+                /*Intent intent = new Intent(root.getContext(), ViewHitActivity.class);
 
                 gvNews.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -89,7 +86,7 @@ public class NewsFragment extends Fragment {
                         intent.putExtra(Hit.class.getSimpleName(), selHit);
                         startActivity(intent);
                     }
-                });
+                });*/
             }
 
             @Override

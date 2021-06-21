@@ -1,17 +1,14 @@
 package com.example.newsapp.ui.saved;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.GridView;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.newsapp.R;
-import com.example.newsapp.ViewHitActivity;
 import com.example.newsapp.adapters.NewsAdapter;
 import com.example.newsapp.business.services.models.Hit;
 import com.orm.SugarContext;
@@ -46,7 +43,7 @@ public class SavedFragment extends Fragment {
         adapter = new NewsAdapter(root.getContext(), R.layout.news_layout, saved);
         gvSaved.setAdapter(adapter);
 
-        gvSaved.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*gvSaved.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(root.getContext(), ViewHitActivity.class);
@@ -61,7 +58,7 @@ public class SavedFragment extends Fragment {
 
                 startActivity(intent);
             }
-        });
+        });*/
 
         return root;
     }

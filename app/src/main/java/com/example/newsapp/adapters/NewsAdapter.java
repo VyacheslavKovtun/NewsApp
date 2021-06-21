@@ -1,6 +1,7 @@
 package com.example.newsapp.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.newsapp.R;
+import com.example.newsapp.ViewHitActivity;
 import com.example.newsapp.business.services.models.Hit;
 import com.orm.SugarContext;
 
@@ -39,6 +41,7 @@ public class NewsAdapter extends ArrayAdapter<Hit> {
         TextView tvPubDate = view.findViewById(R.id.tvPubDate);
         TextView tvDescription = view.findViewById(R.id.tvDescription);
         Button btnSave = view.findViewById(R.id.btnSave);
+        Button btnView = view.findViewById(R.id.btnView);
 
         SugarContext.init(view.getContext());
 
@@ -48,9 +51,20 @@ public class NewsAdapter extends ArrayAdapter<Hit> {
         tvDescription.setText(curNews.getDescription());
 
         btnSave.setOnClickListener(btn -> {
-            Hit.save(curNews);
-            news.remove(curNews);
-            notifyDataSetChanged();
+            List<Hit> saved = Hit.listAll(Hit.class);
+
+            if(saved.stream().filter(h -> h.getUrl().equals(curNews.getUrl())).findFirst().get() == null) {
+                Hit.save(curNews);
+                news.remove(curNews);
+                notifyDataSetChanged();
+            }
+        });
+
+        btnView.setOnClickListener(btn -> {
+            Intent intent = new Intent(view.getContext(), ViewHitActivity.class);
+            curNews.setWatches(curNews.getWatches() + 1);
+            intent.putExtra(Hit.class.getSimpleName(), curNews);
+            getContext().startActivity(intent);
         });
 
         return view;
