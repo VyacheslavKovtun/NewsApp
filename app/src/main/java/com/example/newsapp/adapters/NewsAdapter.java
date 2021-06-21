@@ -43,6 +43,10 @@ public class NewsAdapter extends ArrayAdapter<Hit> {
         TextView tvDescription = view.findViewById(R.id.tvDescription);
         Button btnSave = view.findViewById(R.id.btnSave);
         Button btnView = view.findViewById(R.id.btnView);
+        Button btnDelete = view.findViewById(R.id.btnDelete);
+
+        if(isSaved) { btnSave.setVisibility(View.INVISIBLE); }
+        if(!isSaved) { btnDelete.setVisibility(View.INVISIBLE); }
 
         SugarContext.init(view.getContext());
 
@@ -52,11 +56,9 @@ public class NewsAdapter extends ArrayAdapter<Hit> {
         tvDescription.setText(curNews.getDescription());
 
         btnSave.setOnClickListener(btn -> {
-            if(!isSaved) {
-                Hit.save(curNews);
-                news.remove(curNews);
-                notifyDataSetChanged();
-            }
+            Hit.save(curNews);
+            news.remove(curNews);
+            notifyDataSetChanged();
         });
 
         btnView.setOnClickListener(btn -> {
@@ -69,6 +71,12 @@ public class NewsAdapter extends ArrayAdapter<Hit> {
 
             intent.putExtra(Hit.class.getSimpleName(), curNews);
             getContext().startActivity(intent);
+        });
+
+        btnDelete.setOnClickListener(btn -> {
+            Hit.delete(curNews);
+            news.remove(curNews);
+            notifyDataSetChanged();
         });
 
         return view;
