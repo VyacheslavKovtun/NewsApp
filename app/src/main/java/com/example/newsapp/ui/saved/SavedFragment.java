@@ -43,23 +43,6 @@ public class SavedFragment extends Fragment {
         adapter = new NewsAdapter(root.getContext(), R.layout.news_layout, saved);
         gvSaved.setAdapter(adapter);
 
-        /*gvSaved.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(root.getContext(), ViewHitActivity.class);
-                Hit selHit = saved.get(position);
-                selHit.setWatches(selHit.getWatches() + 1);
-                intent.putExtra(Hit.class.getSimpleName(), selHit);
-                Hit.deleteAll(Hit.class);
-
-                for(Hit hit: saved) {
-                    Hit.save(hit);
-                }
-
-                startActivity(intent);
-            }
-        });*/
-
         return root;
     }
 }

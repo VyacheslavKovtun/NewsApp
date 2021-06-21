@@ -76,17 +76,6 @@ public class NewsFragment extends Fragment {
 
                 adapter = new NewsAdapter(root.getContext(), R.layout.news_layout, news);
                 gvNews.setAdapter(adapter);
-
-                /*Intent intent = new Intent(root.getContext(), ViewHitActivity.class);
-
-                gvNews.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Hit selHit = news.get(position);
-                        intent.putExtra(Hit.class.getSimpleName(), selHit);
-                        startActivity(intent);
-                    }
-                });*/
             }
 
             @Override

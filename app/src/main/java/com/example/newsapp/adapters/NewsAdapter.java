@@ -51,8 +51,8 @@ public class NewsAdapter extends ArrayAdapter<Hit> {
         tvDescription.setText(curNews.getDescription());
 
         btnSave.setOnClickListener(btn -> {
-            List<Hit> saved = Hit.listAll(Hit.class);
 
+            List<Hit> saved = Hit.listAll(Hit.class);
             if(saved.stream().filter(h -> h.getUrl().equals(curNews.getUrl())).findFirst().get() == null) {
                 Hit.save(curNews);
                 news.remove(curNews);
@@ -63,6 +63,11 @@ public class NewsAdapter extends ArrayAdapter<Hit> {
         btnView.setOnClickListener(btn -> {
             Intent intent = new Intent(view.getContext(), ViewHitActivity.class);
             curNews.setWatches(curNews.getWatches() + 1);
+
+            List<Hit> saved = Hit.listAll(Hit.class);
+            if(saved.contains(curNews)) {
+                curNews.save();
+            }
             intent.putExtra(Hit.class.getSimpleName(), curNews);
             getContext().startActivity(intent);
         });
